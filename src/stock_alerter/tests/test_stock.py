@@ -1,4 +1,5 @@
-import unittest, datetime
+import unittest
+from datetime import datetime
 from ..stock import Stock
 
 class StockTest(unittest.TestCase):
@@ -9,20 +10,14 @@ class StockTest(unittest.TestCase):
         self.assertIsNone(self.goog.price)
 
     def test_stock_update(self):
-        self.goog.update(datetime.datetime(2020, 1, 13), price=10)
+        self.goog.update(datetime(2020, 1, 13), price=10)
         self.assertEqual(10, self.goog.price)
 
     def test_negative_price_should_throw_ValueError(self):
-        self.assertRaises(ValueError, self.goog.update, datetime.datetime(2020, 1, 13), -1)
+        with self.assertRaises(ValueError):
+            self.goog.update(datetime(2020, 1, 13), -1)
 
     def test_stock_price_should_give_the_latest_price(self):
-        self.goog.update(datetime.datetime(2020, 2, 12), price=10)
-        self.goog.update(datetime.datetime(2020, 2, 13), price=8.4)
+        self.goog.update(datetime(2020, 2, 12), price=10)
+        self.goog.update(datetime(2020, 2, 13), price=8.4)
         self.assertAlmostEqual(8.4, self.goog.price, delta=0.0001)
-
-    def test_increasing_trend_is_true_if_price_increase_for_3_updates(self):
-        timestamps = [datetime.datetime(2020, 2, 11), datetime.datetime(2020, 2, 12), datetime.datetime(2020, 2, 13)]
-        prices = [8, 10, 12]
-        for timestamp, price in zip(timestamps, prices):
-            self.goog.update(timestamp, price)
-        self.assertTrue(self.goog.is_increasing_trend())
