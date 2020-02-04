@@ -31,3 +31,12 @@ class PriceRuleTest(unittest.TestCase):
     def test_a_PriceRule_only_depends_on_its_stock(self):
       rule = PriceRule("MSFT", lambda stock: stock.price > 10)
       self.assertEqual({"MSFT"}, rule.depends_on())
+
+class AndRuleTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        goog = Stock("GOOG")
+        goog.update(datetime(2014, 2, 10), 8)
+
+    def test_an_AndRule_matches_if_all_component_rules_are_true(self):
+        pass
