@@ -19,3 +19,9 @@ class AndRule:
 
   def matches(self, exchange):
     return all([rule.matches(exchange) for rule in self.rules])
+
+  def depends_on(self):
+    depends = set()
+    for rule in self.rules:
+      depends = depends.union(rule.depends_on())
+    return depends

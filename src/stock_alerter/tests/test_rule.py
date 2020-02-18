@@ -2,7 +2,7 @@ import unittest
 from datetime import datetime
 
 from ..stock import Stock
-from ..rule import PriceRule
+from ..rule import PriceRule, AndRule
 
 class PriceRuleTest(unittest.TestCase):
     @classmethod
